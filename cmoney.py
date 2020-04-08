@@ -1,8 +1,4 @@
-#這支程式是透過sid，也就是股票代碼來辨識個股，
-#看有沒有辦法讓它接完數據後存成CSV檔，
-#再變更股票代碼，
-#再接數據存成CSV檔，
-#直到沒有所有上市公司的數據都下載完畢 ,
+將所有上市公司的數據都下載完畢 
 
 
 import requests  # 導入requests模組，呼 Http用
@@ -45,13 +41,8 @@ if (token_res.status_code == 200):  # 若請求http 200(成功)
         if (data_res.status_code == 200):
             data = json.loads(data_res.text)
 
-        # 將資料放入Pands
             all = pd.DataFrame(data.get("Data"), columns=data.get("Title"))
-            # 留下有用到的欄位
-        #all = all[['日期', '股票代號', '股票名稱', '開盤價', '最高價', '最低價', '收盤價', '成交量']]
-        #all.to_csv('new.csv',index=False)
-        #col=['日期', '股票代號', '股票名稱', '開盤價', '最高價', '最低價', '收盤價', '成交量']
- #           all.set_index('日期', inplace=True)
+
           
            
             if (all.shape[0] ==0 ):
@@ -62,18 +53,7 @@ if (token_res.status_code == 200):  # 若請求http 200(成功)
                 with open('output.csv', 'a', newline='') as f:
                     all.to_csv(f, header=True,encoding='utf-8')
                 
-                
-#                with open('output.csv','w') as f:
-#                    csv_write = csv.writer(f)
-#                    data = all
-#                    print(data)
-#                    csv_write.writerows(data)
-                    
-               # all.to_csv('output.csv',encoding='utf-8-sig')
-                
-   
-            
-    #,skiprows=int(z)
+
     else:
         print("取得資料連線錯誤!" + str(data_res.status_code))
 
